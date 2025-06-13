@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>নোয়াখালী’তে</title>
+
+    <link rel="preload" href="../fonts/TiroBangla.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="../fonts/TiroBangla.woff" as="font" type="font/woff" crossorigin="anonymous">
+
+    <style>
+        /* Step 2: Define the font face. Use 'font-display: swap;' to ensure text remains visible while the font loads. */
+        @font-face {
+            font-family: 'Tiro Bangla'; /* Match this name exactly with what you use in your CSS */
+            src: url('../fonts/TiroBangla.woff2') format('woff2'),
+                 url('../fonts/TiroBangla.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap; /* This is a good practice for font loading */
+        }
+
+        body {
+            /* Using 'Tiro Bangla' as the primary font */
+            font-family: 'Tiro Bangla', sans-serif; /* Added a fallback font */
+        }
+
+        .shironam {
+            text-align: center;
+            /* The font is inherited from the body, but you can specify it again if needed */
+            font-family: 'Tiro Bangla', sans-serif;
+        }
+
+        #fullscreen-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            font-family: 'Tiro Bangla', sans-serif;
+            font-size: 32px;
+            /* display: flex;  Initially it should be none, JS will handle showing it */
+            align-items: center;     /* vertical center */
+            justify-content: center; /* horizontal center */
+            z-index: 9999;
+            text-align: center;
+            opacity: 0; /* Start with opacity 0 for fade in effect */
+            transition: opacity 0.5s ease-in-out; /* Smooth transition for fade */
+        }
+
+        #fullscreen-popup.show {
+            display: flex;
+            opacity: 1;
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+    <h1 class="shironam">নোয়াখালী’তে Shudu</h1>
+    <h3 class="shironam">সম্ভাবনাময় প্রযুক্তির আগমনবার্তা</h3>
+
+    <div id="fullscreen-popup">
+        নোয়াখালী’তে 💐<br> আপনাকে স্বাগতম <br> 🫲 আসসালামু আলাইকুম।
+    </div>
+
+    <script>
+        // Ensure the script runs after the DOM is fully loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            const popup = document.getElementById("fullscreen-popup");
+
+            // Show the popup after a short delay (e.g., 500ms)
+            setTimeout(function () {
+                popup.style.display = "flex"; // First make it part of the layout
+                setTimeout(function() { // Then trigger the transition
+                    popup.classList.add("show");
+                }, 10); // A tiny delay ensures the transition works
+            }, 500); // Show popup after 0.5 seconds
+
+            // Hide the popup after a total of 3 seconds (0.5s delay + 2.5s visible)
+            setTimeout(function () {
+                popup.classList.remove("show");
+                // Wait for the fade-out transition to complete before setting display to none
+                setTimeout(function() {
+                    popup.style.display = "none";
+                }, 500); // This duration should match the transition time in CSS
+            }, 2500);
+        });
+    </script>
+
+</body>
+</html>
