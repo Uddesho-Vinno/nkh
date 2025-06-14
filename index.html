@@ -56,9 +56,66 @@
             opacity: 1;
             visibility: visible;
         }
-    </style>
+   
+
+    /* ========== স্লাইডশো স্টাইল ========== */
+
+    :root {
+        --slide-width: 400px;   /* প্রস্থ পরিবর্তন করুন */
+        --slide-height: 100px;  /* উচ্চতা পরিবর্তন করুন */
+    }
+
+    .slideshow-container {
+       width: var(--slide-width) !important;
+    height: var(--slide-height) !important;
+        position: relative;
+        margin: auto;
+        overflow: hidden;
+        box-shadow: 0 1px 8px rgba(0,0,0,0.2);
+        border-radius: 8px;
+    }
+    
+    .slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        transition: opacity 1s ease;
+    }
+    
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    
+    @keyframes fade {
+        from {opacity: .4}
+        to {opacity: 1}
+    }
+    
+    .fade {
+        animation-name: fade;
+        animation-duration: 1.5s;
+    }
+
+    /* মোবাইল রেস্পন্সিভ */
+    @media (max-width: 900px) {
+        .slideshow-container {
+            width: 95vw;
+            height: calc(95vw * 9/16);
+        }
+    }
+</style>
+
+
 </head>
 <body>
+
+<div id="fullscreen-popup">
+        নোয়াখালী’তে 💐<br>আপনাকে স্বাগতম<br>🫲 আসসালামু আলাইকুম।
+    </div>
 
     <h1 class="shironam">নোয়াখালী’তে</h1>
     <h3 class="shironam">সম্ভাবনাময় প্রযুক্তির আগমনবার্তা</h3>
@@ -71,7 +128,7 @@
 
 <a href="#" style="background-color: #28a745; color: white; display: block; width: 100%; padding: 10px 0; text-decoration: none; border-radius: 0; font-weight: 600; text-align: center;">
     বিজ্ঞাপন দিতে এখানে ক্লিক করুন
-</a><br>
+</a>
 
 
 
@@ -91,15 +148,69 @@
 
 </div>
 
+
+
+<!-- ========== স্লাইডশো HTML ========== -->
+<div class="slideshow-container">
+    <!-- Slide 1 -->
+    <div class="slide fade">
+        <img src="https://picsum.photos/id/1018/1600/900" alt="Nature Image 1">
+    </div>
+    
+    <!-- Slide 2 -->
+    <div class="slide fade">
+        <img src="https://picsum.photos/id/1015/1200/800" alt="Nature Image 2">
+    </div>
+    
+    <!-- Slide 3 -->
+    <div class="slide fade">
+        <img src="https://picsum.photos/id/1019/1920/1080" alt="Nature Image 3">
+    </div>
+    
+    <!-- Slide 4 -->
+    <div class="slide fade">
+        <img src="https://picsum.photos/id/1016/800/600" alt="Nature Image 4">
+    </div>
+    
+    <!-- Slide 5 -->
+    <div class="slide fade">
+        <img src="https://picsum.photos/id/1013/1600/1200" alt="Nature Image 5">
+    </div>
+</div>
+
+<script>
+    // ========== স্লাইডশো স্ক্রিপ্ট ==========
+    const slideInterval = 2000; // সময় ব্যবধান মিলিসেকেন্ডে (2000 = 2 সেকেন্ড)
+    
+    let slideIndex = 0;
+    showSlides();
+    
+    function showSlides() {
+        let slides = document.getElementsByClassName("slide");
+        
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        
+        slideIndex++;
+        
+        if (slideIndex > slides.length) {
+            slideIndex = 1;
+        }    
+        
+        slides[slideIndex-1].style.display = "block";  
+        
+        setTimeout(showSlides, slideInterval);
+    }
+</script>
+
+
     
 
 </div>
 
 
-    <div id="fullscreen-popup">
-        নোয়াখালী’তে 💐<br>আপনাকে স্বাগতম<br>🫲 আসসালামু আলাইকুম।
-    </div>
-
+  
 
 
     <script>
@@ -117,7 +228,7 @@
                 popup.classList.remove("show");
             }, 3000);
         });
-    </script>
+    </script><br>
 
 
  <marquee behavior="scroll" direction="left" scrollamount="5" style="color: white; font-size: 15px; font-weight: 500; background-color: grey; padding: 7px; border-radius: 5px;">
