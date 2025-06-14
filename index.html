@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="bn"> <head>
     <meta charset="UTF-8">
@@ -9,10 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla&display=swap" rel="stylesheet">
-
-
-
-
 
     <style>
         /* Apply the font to the entire page and set a fallback */
@@ -57,6 +52,18 @@
             visibility: visible;
         }
    
+        /* Slideshow container initially hidden */
+        .slideshow-container {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Class to show the slideshow when ready */
+        .slideshow-container.ready {
+            display: block;
+            opacity: 1;
+        }
 
     /* ========== স্লাইডশো স্টাইল ========== */
 
@@ -109,7 +116,6 @@
     }
 </style>
 
-
 </head>
 <body>
 
@@ -118,19 +124,11 @@
     </div>
 
     <h1 class="shironam">নোয়াখালী’তে</h1>
-    <h3 class="shironam">সম্ভাবনাময় প্রযুক্তির আগমনবার্তা</h3>
-
-
-
-
-
-
+    <h3 class="shironam">সম্ভাবনাময় প্রযুক্তির ব্যবহার</h3>
 
 <a href="#" style="background-color: #28a745; color: white; display: block; width: 100%; padding: 10px 0; text-decoration: none; border-radius: 0; font-weight: 600; text-align: center;">
     বিজ্ঞাপন দিতে এখানে ক্লিক করুন
 </a>
-
-
 
 <div style="text-align: center; display: flex; flex-wrap: nowrap; justify-content: center; gap: 10px; padding: 10px; overflow-x: auto;">
 
@@ -147,8 +145,6 @@
     </a>
 
 </div>
-
-
 
 <!-- ========== স্লাইডশো HTML ========== -->
 <div class="slideshow-container">
@@ -182,60 +178,80 @@
     // ========== স্লাইডশো স্ক্রিপ্ট ==========
     const slideInterval = 2000; // সময় ব্যবধান মিলিসেকেন্ডে (2000 = 2 সেকেন্ড)
     
-    let slideIndex = 0;
-    showSlides();
-    
-    function showSlides() {
-        let slides = document.getElementsByClassName("slide");
+    // Function to check if all images are loaded
+    function checkAllImagesLoaded() {
+        const slideshowContainer = document.querySelector('.slideshow-container');
+        const images = slideshowContainer.querySelectorAll('img');
+        let loadedCount = 0;
         
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";  
-        }
-        
-        slideIndex++;
-        
-        if (slideIndex > slides.length) {
-            slideIndex = 1;
-        }    
-        
-        slides[slideIndex-1].style.display = "block";  
-        
-        setTimeout(showSlides, slideInterval);
-    }
-</script>
-
-
-    
-
-</div>
-
-
-  
-
-
-    <script>
-        // Run script after the HTML document is fully loaded
-        document.addEventListener("DOMContentLoaded", function() {
-            const popup = document.getElementById("fullscreen-popup");
-
-            // Show the popup after 500ms
-            setTimeout(function () {
-                popup.classList.add("show");
-            }, 500);
-
-            // Hide the popup after 3000ms (3 seconds)
-            setTimeout(function () {
-                popup.classList.remove("show");
-            }, 3000);
+        images.forEach(img => {
+            if (img.complete) {
+                loadedCount++;
+            } else {
+                img.addEventListener('load', () => {
+                    loadedCount++;
+                    if (loadedCount === images.length) {
+                        // All images loaded, show slideshow
+                        slideshowContainer.classList.add('ready');
+                        startSlideshow();
+                    }
+                });
+            }
         });
-    </script><br>
+        
+        // If all images were already loaded
+        if (loadedCount === images.length) {
+            slideshowContainer.classList.add('ready');
+            startSlideshow();
+        }
+    }
+    
+    // Function to start the slideshow
+    function startSlideshow() {
+        let slideIndex = 0;
+        showSlides();
+        
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            
+            slideIndex++;
+            
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }    
+            
+            slides[slideIndex-1].style.display = "block";  
+            
+            setTimeout(showSlides, slideInterval);
+        }
+    }
+    
+    // Run when DOM is loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        const popup = document.getElementById("fullscreen-popup");
 
+        // Show the popup after 500ms
+        setTimeout(function () {
+            popup.classList.add("show");
+        }, 500);
 
- <marquee behavior="scroll" direction="left" scrollamount="5" style="color: white; font-size: 15px; font-weight: 500; background-color: grey; padding: 7px; border-radius: 5px;">
+        // Hide the popup after 3000ms (3 seconds)
+        setTimeout(function () {
+            popup.classList.remove("show");
+        }, 3000);
+        
+        // Start checking images
+        checkAllImagesLoaded();
+    });
+</script><br>
+
+<marquee behavior="scroll" direction="left" scrollamount="5" style="color: white; font-size: 15px; font-weight: 500; background-color: grey; padding: 7px; border-radius: 5px;">
         আমাদের এই ওয়েবসাইটের কাজ এখনো চলমান / নির্মাণাধীন রয়েছে - অনুগ্রহপূর্বক কিছুদিন পর আবার ভিজিট করুন . . .
     </marquee>
-
-
 
 </body>
 </html>
