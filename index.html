@@ -2,7 +2,7 @@
 <html lang="bn"> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>নোয়াখালী’তে</title>
+    <title>নোয়াখালী'তে</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,6 @@
         }
 
         #fullscreen-popup {
-            display: none; /* Initially hidden */
             position: fixed;
             top: 0;
             left: 0;
@@ -120,10 +119,10 @@
 <body>
 
 <div id="fullscreen-popup">
-        নোয়াখালী’তে 💐<br>আপনাকে স্বাগতম<br>🫲 আসসালামু আলাইকুম।
+        নোয়াখালী'তে 💐<br>আপনাকে স্বাগতম<br>🫲 আসসালামু আলাইকুম।
     </div>
 
-    <h1 class="shironam">নোয়াখালী’তে</h1>
+    <h1 class="shironam">নোয়াখালী'তে</h1>
     <h3 class="shironam">সম্ভাবনাময় প্রযুক্তির ব্যবহার</h3>
 
 <a href="#" style="background-color: #28a745; color: white; display: block; width: 100%; padding: 10px 0; text-decoration: none; border-radius: 0; font-weight: 600; text-align: center;">
@@ -230,19 +229,35 @@
         }
     }
     
+    // Function to check if popup should be shown
+    function shouldShowPopup() {
+        const lastPopupDate = localStorage.getItem('lastPopupDate');
+        const today = new Date().toDateString();
+        
+        // If never shown before or last shown on a different day
+        if (!lastPopupDate || lastPopupDate !== today) {
+            localStorage.setItem('lastPopupDate', today);
+            return true;
+        }
+        return false;
+    }
+    
     // Run when DOM is loaded
     document.addEventListener("DOMContentLoaded", function() {
         const popup = document.getElementById("fullscreen-popup");
 
-        // Show the popup after 500ms
-        setTimeout(function () {
-            popup.classList.add("show");
-        }, 500);
+        // Check if popup should be shown
+        if (shouldShowPopup()) {
+            // Show the popup after 500ms
+            setTimeout(function () {
+                popup.classList.add("show");
+            }, 500);
 
-        // Hide the popup after 3000ms (3 seconds)
-        setTimeout(function () {
-            popup.classList.remove("show");
-        }, 3000);
+            // Hide the popup after 3000ms (3 seconds)
+            setTimeout(function () {
+                popup.classList.remove("show");
+            }, 3000);
+        }
         
         // Start checking images
         checkAllImagesLoaded();
